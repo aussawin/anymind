@@ -16,11 +16,6 @@ import java.time.temporal.ChronoUnit
 @Slf4j
 class WalletService(private val walletRepository: WalletRepository, private val hourlyTransactionHistoryRepository: HourlyTransactionHistoryRepository) {
 
-    fun getAll(): List<Transaction> {
-        val allTransactions: List<WalletHistory> = walletRepository.findAll()
-        return allTransactions.stream().map { i -> Transaction(i) }.toList()
-    }
-
     fun save(transaction: Transaction): Transaction {
         // Truncated hourly
         val startDatetime: ZonedDateTime = transaction.datetime.truncatedTo(ChronoUnit.HOURS).plusHours(1)
@@ -46,12 +41,6 @@ class WalletService(private val walletRepository: WalletRepository, private val 
         return transaction
     }
 
-    fun saveAll(transactions: List<Transaction>): List<Transaction> {
-        val allTransaction: List<WalletHistory> = transactions.stream().map { i -> WalletHistory(i) }.toList()
-        walletRepository.saveAll(allTransaction)
-        return transactions
-    }
-
     fun getByDate(requestBody: GetByDateRequest): List<Transaction> {
         val startZonedDatetimeTruncated: ZonedDateTime = requestBody.startDatetime
             .truncatedTo(ChronoUnit.HOURS)
@@ -60,7 +49,7 @@ class WalletService(private val walletRepository: WalletRepository, private val 
             .truncatedTo(ChronoUnit.HOURS)
             .plusHours(1)
         val allTransactions: List<TruncatedWalletHistory> = hourlyTransactionHistoryRepository
-            .findAllByTransactionDatetimeIsBetween(
+            .findAllByTransactionDatetimeIsBetweenOrderByTransactionDatetimeAsc(
                 Timestamp.from(startZonedDatetimeTruncated.toInstant()),
                 Timestamp.from(endZonedDatetimeTruncated.toInstant()))
         return allTransactions.stream().map { i -> Transaction(i) }.toList()

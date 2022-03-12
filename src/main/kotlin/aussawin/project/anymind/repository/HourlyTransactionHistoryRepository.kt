@@ -18,5 +18,5 @@ interface HourlyTransactionHistoryRepository: JpaRepository<TruncatedWalletHisto
     fun updateAmountByTransactionDateTime(amount: Double, transactionDatetime: Timestamp)
 
     fun findFirstByOrderByTransactionDatetimeDesc(): TruncatedWalletHistory?
-    fun findAllByTransactionDatetimeIsBetween(start: Timestamp, end: Timestamp): List<TruncatedWalletHistory>
+    fun findAllByTransactionDatetimeIsBetweenOrderByTransactionDatetimeAsc(start: Timestamp, end: Timestamp): List<TruncatedWalletHistory>
 }

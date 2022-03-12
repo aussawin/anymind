@@ -6,7 +6,6 @@ import java.sql.Timestamp
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
-import java.util.*
 import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.Table

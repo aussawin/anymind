@@ -12,10 +12,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @Slf4j
 class WalletController(private val walletService: WalletService) {
-    @GetMapping("/getAllTransaction")
-    fun getAll(): List<Transaction> {
-        return walletService.getAll()
-    }
 
     @GetMapping("/getTransactionByDate")
     fun getAll(@RequestBody requestBody: GetByDateRequest): List<Transaction> {
@@ -33,14 +29,5 @@ class WalletController(private val walletService: WalletService) {
         }
     }
 
-    @PostMapping("/saveAll")
-    fun save(@RequestBody transactions: List<Transaction>): String {
-        return try {
-            walletService.saveAll(transactions)
-            "Success"
-        } catch (ex: Exception) {
-            "Failed"
-        }
-    }
 }
 
