@@ -1,5 +1,6 @@
-package aussawin.project.anymind.model
+package aussawin.project.anymind.model.repository
 
+import aussawin.project.anymind.model.Transaction
 import org.apache.logging.log4j.util.Strings
 import org.hibernate.Hibernate
 import java.sql.Timestamp

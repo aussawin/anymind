@@ -28,18 +28,19 @@ class WalletController(private val walletService: WalletService) {
             walletService.save(transaction)
             "Success"
         } catch (ex: Exception) {
+            println(ex.printStackTrace())
             "Failed"
         }
     }
 
-//    @PostMapping("/saveAll")
-//    fun save(@RequestBody transactions: List<Transaction>): String {
-//        return try {
-//            walletService.saveAll(transactions)
-//            "Success"
-//        } catch (ex: Exception) {
-//            "Failed"
-//        }
-//    }
+    @PostMapping("/saveAll")
+    fun save(@RequestBody transactions: List<Transaction>): String {
+        return try {
+            walletService.saveAll(transactions)
+            "Success"
+        } catch (ex: Exception) {
+            "Failed"
+        }
+    }
 }
 

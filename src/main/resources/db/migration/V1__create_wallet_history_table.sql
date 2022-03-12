@@ -1,8 +1,8 @@
 create table wallet_history
 (
-    id                   varchar(36) not null,
-    amount               double      not null,
-    transaction_datetime timestamp   not null,
+    id                   varchar(36)    not null,
+    amount               decimal(7, 2)  not null,
+    transaction_datetime timestamp      not null,
     constraint wallet_history_pk
         primary key (id)
 );
