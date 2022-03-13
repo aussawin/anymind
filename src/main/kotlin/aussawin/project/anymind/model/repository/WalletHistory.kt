@@ -1,6 +1,6 @@
 package aussawin.project.anymind.model.repository
 
-import aussawin.project.anymind.model.Transaction
+import aussawin.project.anymind.model.response.Transaction
 import org.apache.logging.log4j.util.Strings
 import org.hibernate.Hibernate
 import java.sql.Timestamp
@@ -11,6 +11,9 @@ import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.Table
 
+/**
+ * This model used for table: wallet_history
+ */
 @Entity
 @Table(name = "wallet_history")
 data class WalletHistory(

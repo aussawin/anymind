@@ -1,4 +1,4 @@
-package aussawin.project.anymind.model
+package aussawin.project.anymind.model.serializer
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter
 
 object KZonedDateTimeSerializer : KSerializer<ZonedDateTime> {
 
-    const val LONG_FORMAT_DATETIME = "yyyy-MM-dd'T'HH:mm:ssXXX"
+    private const val LONG_FORMAT_DATETIME = "yyyy-MM-dd'T'HH:mm:ssXXX"
 
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ZonedDateTime", PrimitiveKind.STRING)
 
