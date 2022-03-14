@@ -60,13 +60,18 @@ class WalletService(private val walletRepository: WalletRepository, private val 
         val endZonedDatetimeTruncated: ZonedDateTime = requestBody.endDatetime
             .truncatedTo(ChronoUnit.HOURS)
             .plusHours(1)
+
+        // Get transactions within time interval
         val allTransactions: List<TruncatedWalletHistory> = hourlyTransactionHistoryRepository
             .findAllByTransactionDatetimeIsBetweenOrderByTransactionDatetimeAsc(
                 Timestamp.from(startZonedDatetimeTruncated.toInstant()),
                 Timestamp.from(endZonedDatetimeTruncated.toInstant()))
+
         // Mapped the transactions into the map
         val map = mutableMapOf<ZonedDateTime, Double>()
         allTransactions.associateByTo(map, {ZonedDateTime.ofInstant(it.transactionDatetime.toInstant(), ZoneId.of("UTC"))}, {it.amount})
+
+        // Handle if there is no transaction - amount is 0.0
         var initialAmount: Double =
             if (map.containsKey(startZonedDatetimeTruncated)) {
                 map.getValue(startZonedDatetimeTruncated)
@@ -74,10 +79,12 @@ class WalletService(private val walletRepository: WalletRepository, private val 
                 val latestTransaction = hourlyTransactionHistoryRepository.findFirstByTransactionDatetimeBeforeOrderByTransactionDatetimeDesc(Timestamp.from(startZonedDatetimeTruncated.toInstant()))
                 latestTransaction?.amount ?: 0.00
             }
+
+        // Constructed the result model
         val result: MutableList<Transaction> = mutableListOf()
         var zdt = startZonedDatetimeTruncated
         while (zdt.isBefore(endZonedDatetimeTruncated)) {
-            println("Calculated the date: $zdt")
+            // If the zdt exist in map -> the amount changed.
             if (map.containsKey(zdt)) {
                 initialAmount = map.getValue(zdt)
             }

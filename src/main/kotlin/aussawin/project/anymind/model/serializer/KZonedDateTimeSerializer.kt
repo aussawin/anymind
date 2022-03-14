@@ -16,6 +16,10 @@ object KZonedDateTimeSerializer : KSerializer<ZonedDateTime> {
 
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ZonedDateTime", PrimitiveKind.STRING)
 
+    /**
+     * ZonedDatetime response format: yyyy-MM-dd'T'HH:mm:ssXXX
+     * example: 2022-03-20T00:00:00+00:00
+     */
     override fun serialize(encoder: Encoder, value: ZonedDateTime) {
         encoder.encodeString(
             value.format(

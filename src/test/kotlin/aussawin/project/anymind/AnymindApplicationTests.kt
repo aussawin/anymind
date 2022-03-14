@@ -1,4 +1,4 @@
-package test.kotlin.aussawin.project.anymind
+package aussawin.project.anymind
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
